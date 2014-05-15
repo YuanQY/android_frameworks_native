@@ -46,6 +46,15 @@ GraphicBufferMapper::GraphicBufferMapper()
     }
 }
 
+// Engle, add for MTK, start
+#if defined(TARGET_MTK)
+GraphicBufferMapper::~GraphicBufferMapper()
+{
+    gralloc_extra_close(mExtraDev);
+}
+#endif
+// Engle, add for MTK, end
+
 status_t GraphicBufferMapper::registerBuffer(buffer_handle_t handle)
 {
     ATRACE_CALL();
@@ -121,6 +130,26 @@ status_t GraphicBufferMapper::getphys(buffer_handle_t handle, void** paddr)
     return err;
 }
 #endif
+
+// Engle, add for MTK, start
+#if defined(TARGET_MTK)
+status_t GraphicBufferMapper::getIonFd(buffer_handle_t handle, int *idx, int *num)
+{
+    ATRACE_CALL();
+    status_t err;
+
+    if (!mExtraDev) {
+        ALOGE("gralloc extra device is not supported");
+        return INVALID_OPERATION;
+    }
+
+    err = mExtraDev->getIonFd(mExtraDev, handle, idx, num);
+
+    ALOGW_IF(err, "getIonFd(...) failed %d (%s)", err, strerror(-err));
+    return err;
+}
+#endif
+// Engle, add for MTK, end
 
 // ---------------------------------------------------------------------------
 }; // namespace android

@@ -54,6 +54,12 @@ public:
     status_t getphys(buffer_handle_t handle, void** paddr);
 #endif
 
+    // Engle, add for MTK, start
+#if defined(TARGET_MTK)
+    status_t getIonFd(buffer_handle_t handle, int *idx, int *num);
+#endif
+    // Engle, add for MTK, end
+
     // dumps information about the mapping of this handle
     void dump(buffer_handle_t handle);
 
@@ -61,6 +67,11 @@ private:
     friend class Singleton<GraphicBufferMapper>;
     GraphicBufferMapper();
     gralloc_module_t const *mAllocMod;
+
+    // Engle, add for MTK, start
+    ~GraphicBufferMapper();
+    extra_device_t *mExtraDev;
+    // Engle, add for MTK, end
 };
 
 // ---------------------------------------------------------------------------
