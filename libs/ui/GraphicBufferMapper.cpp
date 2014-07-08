@@ -135,6 +135,7 @@ status_t GraphicBufferMapper::getphys(buffer_handle_t handle, void** paddr)
 #if defined(TARGET_MTK)
 status_t GraphicBufferMapper::getIonFd(buffer_handle_t handle, int *idx, int *num)
 {
+	/*
     ATRACE_CALL();
     status_t err;
 
@@ -146,7 +147,8 @@ status_t GraphicBufferMapper::getIonFd(buffer_handle_t handle, int *idx, int *nu
     err = mExtraDev->getIonFd(mExtraDev, handle, idx, num);
 
     ALOGW_IF(err, "getIonFd(...) failed %d (%s)", err, strerror(-err));
-    return err;
+    return err;*/
+    return -1;
 }
 #endif
 // Engle, add for MTK, end
